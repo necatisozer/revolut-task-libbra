@@ -53,7 +53,6 @@ interface AsyncManager {
      * @return [T] within [Flow] builder.
      */
     fun <T> handleAsyncWithTryCatch(
-        continuation: Continuation = RESUME,
         body: suspend () -> T
     ): Flow<Result<T>>
 }

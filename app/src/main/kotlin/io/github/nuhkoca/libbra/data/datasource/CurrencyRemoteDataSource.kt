@@ -21,8 +21,6 @@ import io.github.nuhkoca.libbra.data.model.domain.CurrencyResponse
 import io.github.nuhkoca.libbra.data.model.raw.CurrencyResponseRaw
 import io.github.nuhkoca.libbra.data.service.CurrencyService
 import io.github.nuhkoca.libbra.util.coroutines.AsyncManager
-import io.github.nuhkoca.libbra.util.coroutines.AsyncManager.Continuation
-import io.github.nuhkoca.libbra.util.coroutines.AsyncManager.Continuation.RESUME
 import io.github.nuhkoca.libbra.util.coroutines.DefaultAsyncManager
 import io.github.nuhkoca.libbra.util.coroutines.DispatcherProvider
 import io.github.nuhkoca.libbra.util.mapper.Mapper
@@ -54,11 +52,8 @@ class CurrencyRemoteDataSource @Inject constructor(
      * @return [CurrencyResponse] within [Flow] builder
      */
     @ExperimentalCoroutinesApi
-    override fun getCurrencyList(
-        base: Rate,
-        continuation: Continuation
-    ): Flow<Result<CurrencyResponse>> {
-        return handleAsyncWithTryCatch(continuation) {
+    override fun getCurrencyList(base: Rate): Flow<Result<CurrencyResponse>> {
+        return handleAsyncWithTryCatch {
             val response = currencyService.getCurrencyList(base)
             mapper.map(response)
         }
